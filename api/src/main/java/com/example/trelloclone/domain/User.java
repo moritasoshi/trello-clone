@@ -1,17 +1,15 @@
 package com.example.trelloclone.domain;
 
 import lombok.Data;
-import org.seasar.doma.Entity;
-import org.seasar.doma.GeneratedValue;
-import org.seasar.doma.GenerationType;
-import org.seasar.doma.Id;
+import org.seasar.doma.*;
 
 @Data
 @Entity
-public class ApplicationUser {
+@Table(name = "user")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long user_id;
     private String email;
     private String password;
 }

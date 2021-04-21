@@ -1,9 +1,8 @@
 package com.example.trelloclone.service;
 
-import com.example.trelloclone.dao.ApplicationUserDao;
-import com.example.trelloclone.domain.ApplicationUser;
+import com.example.trelloclone.dao.UserDao;
+import com.example.trelloclone.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,15 +14,15 @@ import java.util.Collections;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private ApplicationUserDao applicationUserDao;
+    private UserDao userDao;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        ApplicationUser applicationUser = applicationUserDao.findByEmail(email);
+        User user = userDao.findByEmail(email);
 
-        if (applicationUser == null) {
+        if (user == null) {
             throw new UsernameNotFoundException(email);
         }
-        return new User(applicationUser.getEmail(), applicationUser.getPassword(), Collections.emptyList());
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), Collections.emptyList());
     }
 }
