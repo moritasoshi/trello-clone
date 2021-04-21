@@ -15,6 +15,9 @@ public interface ApplicationUserDao {
     @Select
     List<ApplicationUser> selectAll();
 
+    @Select
+    ApplicationUser findByEmail(String email);
+
     @Insert
     @Transactional
     int insert(ApplicationUser applicationUser);
