@@ -2,12 +2,18 @@ package com.example.trelloclone;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class TrelloCloneApplication {
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(TrelloCloneApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TrelloCloneApplication.class, args);
+    }
 
 }
