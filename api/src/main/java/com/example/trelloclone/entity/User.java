@@ -1,4 +1,4 @@
-package com.example.trelloclone.domain;
+package com.example.trelloclone.entity;
 
 import lombok.Data;
 import org.seasar.doma.*;

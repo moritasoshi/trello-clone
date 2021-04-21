@@ -1,6 +1,6 @@
 package com.example.trelloclone.dao;
 
-import com.example.trelloclone.domain.User;
+import com.example.trelloclone.entity.User;
 import org.seasar.doma.Dao;
 import org.seasar.doma.Insert;
 import org.seasar.doma.Select;

@@ -44,7 +44,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest req,
                                                 HttpServletResponse res) {
         try {
-            com.example.trelloclone.domain.User creds = new ObjectMapper().readValue(req.getInputStream(), com.example.trelloclone.domain.User.class);
+            com.example.trelloclone.entity.User creds = new ObjectMapper().readValue(req.getInputStream(), com.example.trelloclone.entity.User.class);
 
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(

@@ -1,7 +1,7 @@
 package com.example.trelloclone.service;
 
 import com.example.trelloclone.dao.UserDao;
-import com.example.trelloclone.domain.User;
+import com.example.trelloclone.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
