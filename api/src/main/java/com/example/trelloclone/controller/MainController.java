@@ -1,12 +1,12 @@
 package com.example.trelloclone.controller;
 
 import com.example.trelloclone.entity.Board;
+import com.example.trelloclone.entity.Card;
 import com.example.trelloclone.entity.Tile;
 import com.example.trelloclone.entity.User;
 import com.example.trelloclone.security.SimpleLoginUser;
 import com.example.trelloclone.service.TaskService;
 import com.example.trelloclone.service.UserService;
-import org.seasar.doma.jdbc.Result;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,6 +71,23 @@ public class MainController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(result.getTile_id())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(result);
+    }
+
+
+    //////////////////////
+    //// card
+    //////////////////////
+
+    @PostMapping("/card")
+    public ResponseEntity<Card> createCard(@RequestBody Card card) {
+        Card result = taskService.createCard(card);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(result.getCard_id())
                 .toUri();
 
         return ResponseEntity.created(uri).body(result);
