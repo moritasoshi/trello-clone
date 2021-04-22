@@ -2,6 +2,8 @@ package com.example.trelloclone.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.example.trelloclone.dao.UserDao;
+import com.example.trelloclone.entity.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,14 +14,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static com.example.trelloclone.security.SecurityConstants.*;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
+    private UserDao userDao;
 
-    public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
+    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, UserDao userDao) {
         super(authenticationManager);
+        this.userDao = userDao;
     }
 
     @Override
@@ -49,13 +52,16 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         String token = req.getHeader(HEADER_STRING);
         if (token != null) {
             // parse the token.
-            String user = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
+            String email = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
                     .build()
                     .verify(token.replace(TOKEN_PREFIX, ""))
                     .getSubject();
+            // find login user.
+            User user = this.userDao.findByEmail(email);
+            SimpleLoginUser simpleLoginUser = new SimpleLoginUser(user);
 
-            if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+            if (simpleLoginUser != null) {
+                return new UsernamePasswordAuthenticationToken(simpleLoginUser, null, simpleLoginUser.getAuthorities());
             }
             return null;
         }
