@@ -1,6 +1,6 @@
 package com.example.trelloclone.dao;
 
-import com.example.trelloclone.entity.Board;
+import com.example.trelloclone.entity.Tile;
 import org.seasar.doma.Dao;
 import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
@@ -10,17 +10,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 @ConfigAutowireable
 @Dao
-public interface BoardDao {
+public interface TileDao {
 
     @Select
-    Board findByBoardId(long board_id);
+    Tile findById(Integer tile_id);
 
     @Select
-    Board findLatest();
+    Tile findLatest();
+
+    @Select
+    int fetchMaxTileOrderByBoardId(long board_id);
 
     @Insert
     @Transactional
-    int insert(Board board);
+    int insert(Tile tile);
 
 
 }
