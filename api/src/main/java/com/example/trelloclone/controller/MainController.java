@@ -1,20 +1,20 @@
 package com.example.trelloclone.controller;
 
-import com.example.trelloclone.entity.Board;
-import com.example.trelloclone.entity.Card;
-import com.example.trelloclone.entity.Tile;
-import com.example.trelloclone.entity.User;
+import com.example.trelloclone.dao.BoardsDao;
+import com.example.trelloclone.entity.*;
 import com.example.trelloclone.security.SimpleLoginUser;
 import com.example.trelloclone.service.TaskService;
 import com.example.trelloclone.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 import static com.example.trelloclone.security.SecurityConstants.SIGN_UP_URL;
 
@@ -27,6 +27,12 @@ public class MainController {
     public MainController(UserService userService, TaskService taskService) {
         this.userService = userService;
         this.taskService = taskService;
+    }
+
+    @GetMapping("/boards")
+    public List<com.example.trelloclone.domain.Board> fetchBoards() {
+        User loginUser = ((SimpleLoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        return taskService.fetchBoards(loginUser.getUser_id());
     }
 
     //////////////////////

@@ -1,9 +1,11 @@
 package com.example.trelloclone.service;
 
 import com.example.trelloclone.dao.BoardDao;
+import com.example.trelloclone.dao.BoardsDao;
 import com.example.trelloclone.dao.CardDao;
 import com.example.trelloclone.dao.TileDao;
 import com.example.trelloclone.entity.Board;
+import com.example.trelloclone.entity.Boards;
 import com.example.trelloclone.entity.Card;
 import com.example.trelloclone.entity.Tile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +14,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
 public class TaskService {
     private BoardDao boardDao;
+    private BoardsDao boardsDao;
     private TileDao tileDao;
     private CardDao cardDao;
 
     @Autowired
-    public TaskService(BoardDao boardDao, TileDao tileDao, CardDao cardDao) {
+    public TaskService(BoardDao boardDao, BoardsDao boardsDao, TileDao tileDao, CardDao cardDao) {
         this.boardDao = boardDao;
+        this.boardsDao = boardsDao;
         this.tileDao = tileDao;
         this.cardDao = cardDao;
     }
@@ -32,13 +37,15 @@ public class TaskService {
     //////////////////////
 
     /**
-     * Boardを取得する
+     * Board Listを取得する
      *
-     * @param board_id Board id
-     * @return Board
+     * @param user_id
+     * @return
      */
-    public Board fetchBoard(Integer board_id) {
-        return boardDao.findByBoardId(board_id);
+    public List<com.example.trelloclone.domain.Board> fetchBoards(long user_id) {
+        List<Boards> rawData = boardsDao.findAllBoardsByUserId(user_id);
+        // TODO:Convert to nested objects
+        return null;
     }
 
     /**
