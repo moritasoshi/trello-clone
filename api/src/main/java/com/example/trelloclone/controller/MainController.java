@@ -29,11 +29,6 @@ public class MainController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/boards")
-    public List<com.example.trelloclone.domain.Board> fetchBoards() {
-        User loginUser = ((SimpleLoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
-        return taskService.fetchBoards(loginUser.getUser_id());
-    }
 
     //////////////////////
     //// user
@@ -43,6 +38,18 @@ public class MainController {
     public void createUser(@RequestBody User user) {
         userService.createUser(user);
     }
+
+
+    //////////////////////
+    //// boards
+    //////////////////////
+
+    @GetMapping("/boards")
+    public List<com.example.trelloclone.domain.Board> fetchBoards() {
+        User loginUser = ((SimpleLoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        return taskService.fetchBoards(loginUser.getUser_id());
+    }
+
 
     //////////////////////
     //// board

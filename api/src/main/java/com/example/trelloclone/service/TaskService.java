@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
@@ -37,16 +39,83 @@ public class TaskService {
     //////////////////////
 
     /**
-     * Board Listを取得する
+     * ネストしたTiles,Cardsを持つBoard Listを取得する
      *
      * @param user_id
      * @return
      */
     public List<com.example.trelloclone.domain.Board> fetchBoards(long user_id) {
-        List<Boards> rawData = boardsDao.findAllBoardsByUserId(user_id);
-        // TODO:Convert to nested objects
-        return null;
+        List<Boards> rawDataList = boardsDao.findAllBoardsByUserId(user_id);
+        List<com.example.trelloclone.domain.Board> rawBoards = new ArrayList<>();
+        List<com.example.trelloclone.domain.Tile> rawTiles = new ArrayList<>();
+        List<com.example.trelloclone.domain.Card> rawCards = new ArrayList<>();
+
+        //// set boards
+        for (Boards rawData : rawDataList) {
+            com.example.trelloclone.domain.Board board = new com.example.trelloclone.domain.Board();
+            board.setBoard_id(rawData.getBoard_id());
+            board.setBoard_name(rawData.getBoard_name());
+            board.setUser_id(rawData.getUser_id());
+            rawBoards.add(board);
+        }
+
+        // to distinct boards
+        List<com.example.trelloclone.domain.Board> boards = rawBoards.stream().distinct().collect(Collectors.toList());
+
+
+        //// set tiles
+        for (Boards rawData : rawDataList) {
+            com.example.trelloclone.domain.Tile tile = new com.example.trelloclone.domain.Tile();
+            tile.setTile_id(rawData.getTile_id());
+            tile.setTile_name(rawData.getTile_name());
+            tile.setTile_order(rawData.getTile_order());
+            tile.setBoard_id(rawData.getBoard_id());
+            rawTiles.add(tile);
+        }
+
+        // to parallel & distinct tiles
+        List<com.example.trelloclone.domain.Tile> parallelTiles = rawTiles.stream()
+                .distinct()
+                .filter(tile -> tile.getTile_id() != 0) // exclude null obj
+                .collect(Collectors.toList());
+
+
+        // set cards
+        for (Boards rawData : rawDataList) {
+            com.example.trelloclone.domain.Card card = new com.example.trelloclone.domain.Card();
+            card.setCard_id(rawData.getCard_id());
+            card.setCard_name(rawData.getCard_name());
+            card.setCard_order(rawData.getCard_order());
+            card.setTile_id(rawData.getTile_id());
+            rawCards.add(card);
+        }
+
+        // to parallel & distinct cards
+        List<com.example.trelloclone.domain.Card> parallelCards = rawCards.stream()
+                .distinct()
+                .filter(card -> card.getCard_id() != 0) // exclude null obj
+                .collect(Collectors.toList());
+
+
+        //set cards to tiles
+        for (com.example.trelloclone.domain.Tile tile : parallelTiles) {
+            List<com.example.trelloclone.domain.Card> cards = parallelCards.stream()
+                    .filter(parallelCard -> parallelCard.getTile_id() == tile.getTile_id())
+                    .collect(Collectors.toList());
+            tile.setCards(cards);
+        }
+
+        // set tiles to boards
+        for (com.example.trelloclone.domain.Board board : boards) {
+            List<com.example.trelloclone.domain.Tile> tiles = parallelTiles.stream()
+                    .filter(parallelTile -> parallelTile.getBoard_id() == board.getBoard_id())
+                    .collect(Collectors.toList());
+            board.setTiles(tiles);
+        }
+
+        return boards;
     }
+
 
     /**
      * Boardを新規作成する
