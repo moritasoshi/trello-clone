@@ -1,6 +1,5 @@
 package com.example.trelloclone.controller;
 
-import com.example.trelloclone.dao.BoardsDao;
 import com.example.trelloclone.entity.*;
 import com.example.trelloclone.security.SimpleLoginUser;
 import com.example.trelloclone.service.TaskService;
