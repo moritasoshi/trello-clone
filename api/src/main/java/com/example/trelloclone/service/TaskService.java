@@ -20,6 +20,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class TaskService {
     private BoardDao boardDao;
     private BoardsDao boardsDao;
@@ -35,7 +36,7 @@ public class TaskService {
     }
 
     //////////////////////
-    //// fetch
+    //// boards
     //////////////////////
 
     /**
@@ -117,6 +118,10 @@ public class TaskService {
     }
 
 
+    //////////////////////
+    //// board
+    //////////////////////
+
     /**
      * Boardを新規作成する
      *
@@ -127,6 +132,19 @@ public class TaskService {
         boardDao.insert(board);
         return boardDao.findLatest();
     }
+
+
+    public void deleteBoard(long board_id) {
+        int removedRecords = boardDao.delete(board_id);
+        if (removedRecords == 0) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("board_id: %d doesn't exist.", board_id));
+        }
+    }
+
+
+    //////////////////////
+    //// tile
+    //////////////////////
 
     /**
      * Tileを新規作成する
@@ -152,6 +170,10 @@ public class TaskService {
         return tileDao.findLatest();
     }
 
+
+    //////////////////////
+    //// card
+    //////////////////////
 
     /**
      * Cardを新規作成する
