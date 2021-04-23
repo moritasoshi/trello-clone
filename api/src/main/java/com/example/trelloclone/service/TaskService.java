@@ -133,7 +133,11 @@ public class TaskService {
         return boardDao.findLatest();
     }
 
-
+    /**
+     * Boardを削除する
+     *
+     * @param board_id
+     */
     public void deleteBoard(long board_id) {
         int removedRecords = boardDao.delete(board_id);
         if (removedRecords == 0) {
@@ -170,6 +174,17 @@ public class TaskService {
         return tileDao.findLatest();
     }
 
+    /**
+     * Tileを削除する
+     *
+     * @param tile_id
+     */
+    public void deleteTile(long tile_id) {
+        int removedRecords = tileDao.delete(tile_id);
+        if (removedRecords == 0) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("tile_id: %d doesn't exist.", tile_id));
+        }
+    }
 
     //////////////////////
     //// card
@@ -197,5 +212,17 @@ public class TaskService {
         // insert
         cardDao.insert(card);
         return cardDao.findLatest();
+    }
+
+    /**
+     * Cardを削除する
+     *
+     * @param card_id
+     */
+    public void deleteCard(long card_id) {
+        int removedRecords = cardDao.delete(card_id);
+        if (removedRecords == 0) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("card_id: %d doesn't exist.", card_id));
+        }
     }
 }

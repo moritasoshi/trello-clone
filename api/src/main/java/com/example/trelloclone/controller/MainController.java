@@ -93,6 +93,11 @@ public class MainController {
         return ResponseEntity.created(uri).body(result);
     }
 
+    @DeleteMapping("/tile/{tile_id}")
+    public ResponseEntity<Object> deleteTile(@PathVariable long tile_id) {
+        taskService.deleteTile(tile_id);
+        return ResponseEntity.noContent().build();
+    }
 
     //////////////////////
     //// card
@@ -108,5 +113,11 @@ public class MainController {
                 .toUri();
 
         return ResponseEntity.created(uri).body(result);
+    }
+
+    @DeleteMapping("/card/{card_id}")
+    public ResponseEntity<Object> deleteCard(@PathVariable long card_id) {
+        taskService.deleteCard(card_id);
+        return ResponseEntity.noContent().build();
     }
 }
