@@ -5,18 +5,22 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-import Login from './pages/LoginPage';
+import SignInSide from './pages/SignInSide';
+import SignUp from './pages/SignUp';
 import Header from './templates/Header';
 
 ReactDOM.render(
   <BrowserRouter>
-    <Header title={ 'Trello Clone' }/>
     <Switch>
       <Route exact path="/">
-        <Login />
+        <Header title={'Trello Clone'} />
+        Hello World!
       </Route>
-      <Route exact path="/login">
-        <Login />
+      <Route exact path="/sign-in">
+        <SignInSide />
+      </Route>
+      <Route exact path="/sign-up">
+        <SignUp />
       </Route>
     </Switch>
   </BrowserRouter>,

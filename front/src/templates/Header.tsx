@@ -47,7 +47,7 @@ export default function Header(props: Props) {
           </Link>
         </Typography>
         <Button variant="outlined" size="small">
-          <Link to="/login" style={{ textDecoration: 'none' }}>
+          <Link to="/sign-in" style={{ textDecoration: 'none' }}>
             Sign in
           </Link>
         </Button>
