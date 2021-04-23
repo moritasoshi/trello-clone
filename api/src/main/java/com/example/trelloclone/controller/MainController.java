@@ -45,9 +45,10 @@ public class MainController {
     //////////////////////
 
     @GetMapping("/boards")
-    public List<com.example.trelloclone.domain.Board> fetchBoards() {
+    public ResponseEntity<List<com.example.trelloclone.domain.Board>> fetchBoards() {
         User loginUser = ((SimpleLoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
-        return taskService.fetchBoards(loginUser.getUser_id());
+        List<com.example.trelloclone.domain.Board> boards = taskService.fetchBoards(loginUser.getUser_id());
+        return ResponseEntity.ok(boards);
     }
 
 
