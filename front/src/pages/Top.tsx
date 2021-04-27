@@ -1,19 +1,31 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { Board } from '../Types';
+import SimpleCard from '../components/SimpleCard';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core";
+
 const initialState: Board[] = [{
   board_id: 1,
   board_name: "sample",
   user_id: 1
-}, {
-  board_id: 2,
-  board_name: "sample",
-  user_id: 1
 }]
 
+const useStyles = makeStyles({
+  card: {
+    margin: 30
+  }
+})
 
 const Top: React.FC = () => {
+  const history = useHistory();
+  const classes = useStyles();
+
+  // state
   const [boards, setBoards] = useState<Board[]>(initialState);
+
+  // side-effects
   useEffect(() => {
     console.log('副作用関数が実行されました！')
     const fetchBoards = async () => {
@@ -31,20 +43,18 @@ const Top: React.FC = () => {
         })
       setBoards(res_data);
     };
+
     fetchBoards();
   }, [])
+
   return (
-    <div>
-      <h1>Hello World!</h1>
+    <React.Fragment>
       { boards.map((board) => (
-        <ol key={board.board_id}>
-          <li>board_id: {board.board_id}</li>
-          <li>board_name: {board.board_name}</li>
-          <li>user_id: {board.user_id}</li>
-          <hr />
-        </ol>
+        <div className={classes.card}>
+          <SimpleCard board={board} key={board.board_id} />
+        </div>
       ))}
-    </div>
+    </React.Fragment>
   )
 }
 export default Top;
