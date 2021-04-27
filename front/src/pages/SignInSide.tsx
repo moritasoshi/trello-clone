@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -6,13 +7,14 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-import { Link as RouterLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { User } from '../Types';
 
 function Copyright() {
   return (
@@ -57,10 +59,40 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-
+const initialState = {
+  inputEmail: '',
+  inputPassword: ''
+}
 export default function SignInSide() {
+  const history = useHistory();
   const classes = useStyles();
+  // state
+  const [inputEmail, setInputEmail] = useState<string>(initialState.inputEmail);
+  const [inputPassword, setInputPassword] = useState<string>(initialState.inputPassword);
 
+  // on event
+  const handleInputEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputEmail(e.target.value)
+  }
+  const handleInputPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputPassword(e.target.value)
+  }
+
+  const handleSubmit = () => {
+    const newUser: User = {
+      email: inputEmail,
+      password: inputPassword
+    }
+    const url: string = "http://localhost:8080/api/v1/auth/login";
+    axios.post(url, newUser)
+      .then((result) => {
+        console.log(result);
+        history.push("/");
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -84,6 +116,8 @@ export default function SignInSide() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={inputEmail}
+              onChange={handleInputEmailChange}
             />
             <TextField
               variant="outlined"
@@ -95,17 +129,20 @@ export default function SignInSide() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={inputPassword}
+              onChange={handleInputPasswordChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
             <Button
-              type="submit"
+              type="button"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={handleSubmit}
             >
               Sign In
             </Button>
@@ -116,10 +153,8 @@ export default function SignInSide() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link variant="body2">
-                  <RouterLink to="/sign-up">
-                    {"Don't have an account? Sign Up"}
-                  </RouterLink>
+                <Link href="/sign-up" variant="body2">
+                  Don't have an account? Sign Up
                 </Link>
               </Grid>
             </Grid>
