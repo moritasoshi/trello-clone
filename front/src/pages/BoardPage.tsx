@@ -71,10 +71,10 @@ export default function BoardPage({ board }: Props) {
 
   return (
     <div>
-      {tiles?.map((t: Tile) => {
+      {tiles?.map((tile: Tile) => {
         return (
           <>
-            <SimpleTile tile={t} />
+            <SimpleTile tile={tile} />
           </>
         );
       })}
