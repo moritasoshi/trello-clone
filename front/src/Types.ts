@@ -22,6 +22,6 @@ export type Tile = {
 export type Card = {
   card_id?: number;
   card_name: string;
-  car_order: number;
+  card_order: number;
   tile_id?: number;
 };
