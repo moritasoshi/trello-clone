@@ -8,55 +8,7 @@ import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import { Column, Row, Item } from "@mui-treasury/components/flex";
 import { Card, Tile } from "../Types";
-
-const useCardStyles = makeStyles(() => ({
-  text: {
-    fontFamily: "Barlow, san-serif",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-    overflow: "hidden",
-  },
-  card_name: {
-    fontWeight: 600,
-    fontSize: "1rem",
-    color: "#122740",
-  },
-  caption: {
-    fontSize: "0.875rem",
-    color: "#758392",
-    marginTop: -4,
-  },
-  btn: {
-    borderRadius: 20,
-    padding: "0.125rem 0.75rem",
-    borderColor: "#becddc",
-    fontSize: "0.75rem",
-  },
-}));
-
-type SimpleCardProps = {
-  card: Card;
-};
-
-const SimpleCard = ({ card }: SimpleCardProps) => {
-  const { card_name } = card;
-  const styles = useCardStyles();
-  return (
-    <Row gap={2} p={2.5}>
-      <Item></Item>
-      <Row wrap grow gap={0.5} minWidth={0}>
-        <Item grow minWidth={0}>
-          <div className={cx(styles.card_name, styles.text)}>{card_name}</div>
-        </Item>
-        <Item position={"middle"}>
-          <Button className={styles.btn} variant={"outlined"}>
-            Delete
-          </Button>
-        </Item>
-      </Row>
-    </Row>
-  );
-};
+import SimpleCard from "./SimpleCard";
 
 const useTileStyles = makeStyles(() => ({
   card: {
@@ -99,7 +51,7 @@ const SimpleTile = (props: SimpleTileProps) => {
       <NoSsr>
         <GoogleFontLoader fonts={[{ font: "Barlow", weights: [400, 600] }]} />
       </NoSsr>
-      <Column p={0} gap={0} className={styles.card}>
+      <Column p={0} gap={1.5} m={2} className={styles.card}>
         <Row wrap p={2} alignItems={"baseline"} className={styles.header}>
           <Item stretched className={styles.headline}>
             {tile.tile_name}
