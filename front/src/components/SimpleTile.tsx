@@ -63,9 +63,13 @@ const SimpleTile = (props: SimpleTileProps) => {
         </Row>
         {tile.cards?.map((card: Card, index: number) => (
           <>
-            <SimpleCard card={card} />
+            <SimpleCard card={card} key={card.card_id} />
             {tile.cards?.length !== index + 1 && (
-              <Divider variant={"middle"} className={styles.divider} />
+              <Divider
+                variant={"middle"}
+                className={styles.divider}
+                key={index}
+              />
             )}
           </>
         ))}

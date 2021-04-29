@@ -81,10 +81,10 @@ export default function BoardPage({ board }: Props) {
   const { tiles } = board;
 
   return (
-      <Row wrap p={2} alignItems={"baseline"} className={styles.header}>
-        {tiles?.map((tile: Tile) => {
-          return <SimpleTile tile={tile}  />;
-        })}
-      </Row>
+    <Row wrap p={2} alignItems={"baseline"} className={styles.header}>
+      {tiles?.map((tile: Tile) => {
+        return <SimpleTile tile={tile} key={tile.tile_id} />;
+      })}
+    </Row>
   );
 }
