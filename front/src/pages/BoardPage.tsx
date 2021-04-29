@@ -9,8 +9,19 @@ import Typography from "@material-ui/core/Typography";
 import { useHistory, useParams } from "react-router-dom";
 import { Board, Tile } from "../Types";
 import SimpleTile from "../components/SimpleTile";
+import { Column, Row, Item } from "@mui-treasury/components/flex";
 
 const useStyles = makeStyles((theme) => ({
+  card: {
+    width: "250px",
+    borderRadius: 16,
+    boxShadow: "0 8px 16px 0 #BDC9D7",
+    overflow: "hidden",
+  },
+  header: {
+    fontFamily: "Barlow, san-serif",
+    backgroundColor: "#fff",
+  },
   root: {
     width: 250,
     backgroundColor: "#00CC00",
@@ -66,18 +77,14 @@ const initialBoard = {
 
 export default function BoardPage({ board }: Props) {
   const history = useHistory();
-  const classes = useStyles();
+  const styles = useStyles();
   const { tiles } = board;
 
   return (
-    <div>
-      {tiles?.map((tile: Tile) => {
-        return (
-          <>
-            <SimpleTile tile={tile} />
-          </>
-        );
-      })}
-    </div>
+      <Row wrap p={2} alignItems={"baseline"} className={styles.header}>
+        {tiles?.map((tile: Tile) => {
+          return <SimpleTile tile={tile}  />;
+        })}
+      </Row>
   );
 }

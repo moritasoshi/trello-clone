@@ -58,9 +58,9 @@ const SimpleCard = ({ card }: SimpleCardProps) => {
   );
 };
 
-const useStyles = makeStyles(() => ({
+const useTileStyles = makeStyles(() => ({
   card: {
-    width: "100%",
+    width: "250px",
     borderRadius: 16,
     boxShadow: "0 8px 16px 0 #BDC9D7",
     overflow: "hidden",
@@ -92,7 +92,7 @@ type SimpleTileProps = {
   tile: Tile;
 };
 const SimpleTile = (props: SimpleTileProps) => {
-  const styles = useStyles();
+  const styles = useTileStyles();
   const { tile } = props;
   return (
     <>
