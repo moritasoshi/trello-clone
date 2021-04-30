@@ -15,13 +15,9 @@ import BoardPage from "./pages/BoardPage";
 import { Board, User } from "./Types";
 import React, { useEffect, useReducer, useState } from "react";
 
-const initialState: Board[] = [
-  {
-    board_id: 1,
-    board_name: "sample",
-    user_id: 1,
-  },
-];
+const initialState = {
+  boards: [],
+};
 type Store = {
   boards: Board[];
 };
@@ -30,17 +26,13 @@ type Action = {
   board: Board;
 };
 
-const reducer: React.Reducer<Store, Action> = (
-  state: Store,
-  action: Action
-) => {
+const reducer: React.Reducer<Store, Action> = (state, action) => {
   switch (action.type) {
     case "delete":
       return {
-        boards: state.boards.filter((board) => {
-          console.log(board.board_id !== action.board.board_id);
-          return board.board_id !== action.board.board_id;
-        }),
+        boards: state.boards.filter(
+          (board) => board.board_id !== action.board.board_id
+        ),
       };
     case "add":
       const newBoards = [...state.boards];
@@ -52,11 +44,10 @@ const reducer: React.Reducer<Store, Action> = (
 };
 
 const App: React.FC = () => {
-  const [state, dispatch] = useReducer(reducer, { boards: [] });
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const deleteBoard = (board: Board) => {
     dispatch({ type: "delete", board: board });
-    console.log("delete: " + board.board_id);
   };
 
   useEffect(() => {
@@ -72,7 +63,7 @@ const App: React.FC = () => {
           "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmb29Ac2FtcGxlLmNvbSIsImV4cCI6MTYxOTkxNzI5OH0.hLaFezhu6RBpLbT4nRuBwizUjpTyD0jOwQmV_jIgKndN4aRmZPfN7MbFcArvwEF0CmP9AC3dDWPoYlelOMFBkA",
       },
     };
-    const res_data = await axios
+    const boards_data = await axios
       .get(url, config)
       .then((response) => {
         return response.data;
@@ -80,7 +71,7 @@ const App: React.FC = () => {
       .catch((err) => {
         console.error(err);
       });
-    for (const board of res_data) {
+    for (const board of boards_data) {
       dispatch({ type: "add", board: board });
     }
   };
