@@ -17,11 +17,6 @@ const useCardStyles = makeStyles(() => ({
     fontSize: "1rem",
     color: "#122740",
   },
-  caption: {
-    fontSize: "0.875rem",
-    color: "#758392",
-    marginTop: -4,
-  },
   btn: {
     borderRadius: 20,
     padding: "0.125rem 0.75rem",
@@ -37,6 +32,9 @@ type SimpleCardProps = {
 const SimpleCard = ({ card }: SimpleCardProps) => {
   const { card_name } = card;
   const styles = useCardStyles();
+  const deleteCard = () => {
+    console.log(`Delete card (card_id: ${card.card_id})`);
+  };
   return (
     <Row gap={2} p={2.5}>
       <Item></Item>
@@ -45,7 +43,11 @@ const SimpleCard = ({ card }: SimpleCardProps) => {
           <div className={cx(styles.card_name, styles.text)}>{card_name}</div>
         </Item>
         <Item position={"middle"}>
-          <Button className={styles.btn} variant={"outlined"}>
+          <Button
+            className={styles.btn}
+            variant={"outlined"}
+            onClick={deleteCard}
+          >
             Delete
           </Button>
         </Item>

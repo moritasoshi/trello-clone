@@ -27,12 +27,13 @@ const useStyles = makeStyles({
 
 type Props = {
   board: Board;
+  deleteBoard: (board: Board) => void;
 };
 
 export default function SimpleBoard(props: Props) {
   const history = useHistory();
   const classes = useStyles();
-  const { board } = props;
+  const { board, deleteBoard } = props;
 
   const handleOnClick = () => {
     const board_id = board.board_id;
@@ -53,6 +54,13 @@ export default function SimpleBoard(props: Props) {
           onClick={handleOnClick}
         >
           View this board
+        </Button>
+        <Button
+          variant="outlined"
+          className={classes.button}
+          onClick={() => deleteBoard(board)}
+        >
+          Delete
         </Button>
       </CardActions>
     </Card>

@@ -13,7 +13,7 @@ import SignUp from "./pages/SignUp";
 import BoardListPage from "./pages/BoardListPage";
 import BoardPage from "./pages/BoardPage";
 import { Board, User } from "./Types";
-import { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 
 const initialState: Board[] = [
   {
@@ -22,9 +22,43 @@ const initialState: Board[] = [
     user_id: 1,
   },
 ];
+type Store = {
+  boards: Board[];
+};
+type Action = {
+  type: string;
+  board: Board;
+};
 
-const App = () => {
-  const [boards, setBoards] = useState<Board[]>(initialState);
+const reducer: React.Reducer<Store, Action> = (
+  state: Store,
+  action: Action
+) => {
+  switch (action.type) {
+    case "delete":
+      return {
+        boards: state.boards.filter((board) => {
+          console.log(board.board_id !== action.board.board_id);
+          return board.board_id !== action.board.board_id;
+        }),
+      };
+    case "add":
+      const newBoards = [...state.boards];
+      newBoards.push(action.board);
+      return { boards: newBoards };
+    default:
+      throw new Error();
+  }
+};
+
+const App: React.FC = () => {
+  const [state, dispatch] = useReducer(reducer, { boards: [] });
+
+  const deleteBoard = (board: Board) => {
+    dispatch({ type: "delete", board: board });
+    console.log("delete: " + board.board_id);
+  };
+
   useEffect(() => {
     fetchBoards();
     return () => {};
@@ -46,7 +80,9 @@ const App = () => {
       .catch((err) => {
         console.error(err);
       });
-    setBoards(res_data);
+    for (const board of res_data) {
+      dispatch({ type: "add", board: board });
+    }
   };
 
   return (
@@ -54,11 +90,11 @@ const App = () => {
       <Switch>
         <Route exact path="/">
           <Header title={"Trello Clone"} />
-          <BoardListPage />
+          <BoardListPage boards={state.boards} deleteBoard={deleteBoard} />
         </Route>
         <Route exact path="/board/:board_id">
           <Header title={"Trello Clone"} />
-          <DynamicBoardPage boards={boards} />
+          <DynamicBoardPage boards={state.boards} />
         </Route>
         <Route exact path="/sign-in">
           <SignInSide />
@@ -80,9 +116,9 @@ const DynamicBoardPage = ({ boards }: Props) => {
 
   const board = boards.find((board) => board.board_id === board_id_number);
   if (board) {
-    return <BoardPage board={board} />;    
+    return <BoardPage board={board} />;
   }
-  return <div>Error!</div>
+  return <div>Error!</div>;
 };
 
 export default App;
