@@ -1,8 +1,7 @@
-import { Board } from "../Types";
-import SimpleBoard from "../components/SimpleBoard";
-import React from "react";
-import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
+import React from "react";
+import SimpleBoard from "../components/SimpleBoard";
+import { Board } from "../Types";
 
 const useStyles = makeStyles({
   card: {
@@ -15,7 +14,6 @@ type Props = {
 };
 const BoardListPage: React.FC<Props> = (props: Props) => {
   const { boards, deleteBoard } = props;
-  const history = useHistory();
   const classes = useStyles();
 
   return (

@@ -1,21 +1,9 @@
+import axios from "axios";
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  RouteProps,
-  Redirect,
-} from "react-router-dom";
-
-import axios from "axios";
-import Header from "./templates/Header";
-import SignInSide from "./pages/SignInSide";
-import SignUp from "./pages/SignUp";
-import Top from "./pages/BoardListPage";
-import { User } from "./Types";
-import Task from "./pages/BoardPage";
+import { Redirect, Route, RouteProps } from "react-router-dom";
 import App from "./App";
+import { User } from "./Types";
 
 // PrivateRouteの実装
 const PrivateRoute: React.FC<RouteProps> = ({ ...props }) => {
@@ -45,25 +33,6 @@ const useAuthUser = () => {
     .catch((err) => {
       console.error(err);
     });
-};
-
-const fetchBoards = async () => {
-  const url = "http://localhost:8080/api/v1/boards";
-  const config = {
-    headers: {
-      Authorization:
-        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmb29Ac2FtcGxlLmNvbSIsImV4cCI6MTYxOTkxNzI5OH0.hLaFezhu6RBpLbT4nRuBwizUjpTyD0jOwQmV_jIgKndN4aRmZPfN7MbFcArvwEF0CmP9AC3dDWPoYlelOMFBkA",
-    },
-  };
-  const res_data = await axios
-    .get(url, config)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-  // setBoards(res_data);
 };
 
 ReactDOM.render(<App />, document.getElementById("root"));

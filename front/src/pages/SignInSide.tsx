@@ -1,58 +1,60 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import { useHistory } from 'react-router-dom';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import { User } from '../Types';
+import Avatar from "@material-ui/core/Avatar";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import axios from "axios";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { User } from "../Types";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh',
+    height: "100vh",
   },
   image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)',
-    backgroundRepeat: 'no-repeat',
+    backgroundImage: "url(https://source.unsplash.com/random)",
+    backgroundRepeat: "no-repeat",
     backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+      theme.palette.type === "light"
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
+    backgroundSize: "cover",
+    backgroundPosition: "center",
   },
   paper: {
     margin: theme.spacing(8, 4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -60,39 +62,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const initialState = {
-  inputEmail: '',
-  inputPassword: ''
-}
+  inputEmail: "",
+  inputPassword: "",
+};
 export default function SignInSide() {
   const history = useHistory();
   const classes = useStyles();
   // state
   const [inputEmail, setInputEmail] = useState<string>(initialState.inputEmail);
-  const [inputPassword, setInputPassword] = useState<string>(initialState.inputPassword);
+  const [inputPassword, setInputPassword] = useState<string>(
+    initialState.inputPassword
+  );
 
   // on event
   const handleInputEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputEmail(e.target.value)
-  }
-  const handleInputPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputPassword(e.target.value)
-  }
+    setInputEmail(e.target.value);
+  };
+  const handleInputPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setInputPassword(e.target.value);
+  };
 
   const handleSubmit = () => {
     const newUser: User = {
       email: inputEmail,
-      password: inputPassword
-    }
+      password: inputPassword,
+    };
     const url: string = "http://localhost:8080/api/v1/auth/login";
-    axios.post(url, newUser)
+    axios
+      .post(url, newUser)
       .then((result) => {
         console.log(result);
         history.push("/");
       })
       .catch((err) => {
-        console.error(err)
-      })
-  }
+        console.error(err);
+      });
+  };
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />

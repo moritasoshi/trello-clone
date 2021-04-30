@@ -1,9 +1,8 @@
-import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
-import { Board, Tile } from "../Types";
-import SimpleTile from "../components/SimpleTile";
 import { Row } from "@mui-treasury/components/flex";
+import React from "react";
+import SimpleTile from "../components/SimpleTile";
+import { Board, Tile } from "../Types";
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -16,9 +15,7 @@ type Props = {
   board: Board;
 };
 
-
 export default function BoardPage({ board }: Props) {
-  const history = useHistory();
   const styles = useStyles();
   const { tiles } = board;
 

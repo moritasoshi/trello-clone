@@ -1,10 +1,10 @@
-import React from "react";
-import NoSsr from "@material-ui/core/NoSsr";
-import GoogleFontLoader from "react-google-font-loader";
 import Divider from "@material-ui/core/Divider";
 import Link from "@material-ui/core/Link";
+import NoSsr from "@material-ui/core/NoSsr";
 import { makeStyles } from "@material-ui/core/styles";
-import { Column, Row, Item } from "@mui-treasury/components/flex";
+import { Column, Item, Row } from "@mui-treasury/components/flex";
+import React from "react";
+import GoogleFontLoader from "react-google-font-loader";
 import { Card, Tile } from "../Types";
 import SimpleCard from "./SimpleCard";
 

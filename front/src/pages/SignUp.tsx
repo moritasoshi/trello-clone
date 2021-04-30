@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { User } from '../Types';
-import { useHistory } from 'react-router-dom';
+import Avatar from "@material-ui/core/Avatar";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
+import Container from "@material-ui/core/Container";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import axios from "axios";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { User } from "../Types";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
@@ -32,16 +32,16 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -50,39 +50,44 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const initialState = {
-  inputEmail: '',
-  inputPassword: ''
-}
+  inputEmail: "",
+  inputPassword: "",
+};
 
 export default function SignUp() {
   const history = useHistory();
   const classes = useStyles();
   // state
   const [inputEmail, setInputEmail] = useState<string>(initialState.inputEmail);
-  const [inputPassword, setInputPassword] = useState<string>(initialState.inputPassword);
+  const [inputPassword, setInputPassword] = useState<string>(
+    initialState.inputPassword
+  );
 
   // on event
   const handleInputEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputEmail(e.target.value)
-  }
-  const handleInputPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputPassword(e.target.value)
-  }
+    setInputEmail(e.target.value);
+  };
+  const handleInputPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setInputPassword(e.target.value);
+  };
 
   const handleSubmit = () => {
     const newUser: User = {
       email: inputEmail,
-      password: inputPassword
-    }
+      password: inputPassword,
+    };
     const url: string = "http://localhost:8080/api/v1/auth/sign-up";
-    axios.post(url, newUser)
+    axios
+      .post(url, newUser)
       .then((result) => {
         console.log(result);
         history.push("/sign-in");
       })
       .catch((err) => {
-        console.error(err)
-      })
+        console.error(err);
+      });
   };
 
   return (

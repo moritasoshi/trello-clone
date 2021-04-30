@@ -1,19 +1,12 @@
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  RouteProps,
-  Redirect,
-  useParams,
-} from "react-router-dom";
 import axios from "axios";
-import Header from "./templates/Header";
-import SignInSide from "./pages/SignInSide";
-import SignUp from "./pages/SignUp";
+import React, { useEffect, useReducer } from "react";
+import { BrowserRouter, Route, Switch, useParams } from "react-router-dom";
 import BoardListPage from "./pages/BoardListPage";
 import BoardPage from "./pages/BoardPage";
-import { Board, User } from "./Types";
-import React, { useEffect, useReducer, useState } from "react";
+import SignInSide from "./pages/SignInSide";
+import SignUp from "./pages/SignUp";
+import Header from "./templates/Header";
+import { Board } from "./Types";
 
 const initialState = {
   boards: [],

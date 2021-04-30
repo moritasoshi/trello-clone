@@ -1,8 +1,8 @@
-import React from "react";
-import cx from "clsx";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import { Column, Row, Item } from "@mui-treasury/components/flex";
+import { Item, Row } from "@mui-treasury/components/flex";
+import cx from "clsx";
+import React from "react";
 import { Card } from "../Types";
 
 const useCardStyles = makeStyles(() => ({

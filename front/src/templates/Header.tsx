@@ -1,9 +1,9 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import React from "react";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
   toolbarSecondary: {
-    justifyContent: 'space-between',
-    overflowX: 'auto',
+    justifyContent: "space-between",
+    overflowX: "auto",
   },
   toolbarLink: {
     padding: theme.spacing(1),
@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type Props = {
-  title: string
-}
+  title: string;
+};
 
 export default function Header(props: Props) {
   const classes = useStyles();
@@ -42,12 +42,12 @@ export default function Header(props: Props) {
           noWrap
           className={classes.toolbarTitle}
         >
-          <Link to="/" style={{ textDecoration: 'none' }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
             {title}
           </Link>
         </Typography>
         <Button variant="outlined" size="small">
-          <Link to="/sign-in" style={{ textDecoration: 'none' }}>
+          <Link to="/sign-in" style={{ textDecoration: "none" }}>
             Sign in
           </Link>
         </Button>
