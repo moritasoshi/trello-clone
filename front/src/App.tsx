@@ -1,43 +1,20 @@
 import axios from "axios";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch, useParams } from "react-router-dom";
 import BoardListPage from "./pages/BoardListPage";
 import BoardPage from "./pages/BoardPage";
 import SignInSide from "./pages/SignInSide";
 import SignUp from "./pages/SignUp";
+import { useBoardsReducer } from "./reducers/index";
 import Header from "./templates/Header";
 import { Board } from "./Types";
 
-const initialState = {
+const initialBoardsState = {
   boards: [],
-};
-type Store = {
-  boards: Board[];
-};
-type Action = {
-  type: string;
-  board: Board;
-};
-
-const reducer: React.Reducer<Store, Action> = (state, action) => {
-  switch (action.type) {
-    case "delete":
-      return {
-        boards: state.boards.filter(
-          (board) => board.board_id !== action.board.board_id
-        ),
-      };
-    case "add":
-      const newBoards = [...state.boards];
-      newBoards.push(action.board);
-      return { boards: newBoards };
-    default:
-      throw new Error();
-  }
 };
 
 const App: React.FC = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useBoardsReducer(initialBoardsState);
 
   const deleteBoard = (board: Board) => {
     dispatch({ type: "delete", board: board });

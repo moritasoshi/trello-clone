@@ -1,3 +1,4 @@
+// domain
 export type User = {
   user_id?: number;
   email: string;
@@ -24,4 +25,13 @@ export type Card = {
   card_name: string;
   card_order: number;
   tile_id?: number;
+};
+
+// reducer store and actions
+export type BoardsStore = {
+  boards: Board[];
+};
+export type BoardsAction = {
+  type: string;
+  board: Board;
 };
