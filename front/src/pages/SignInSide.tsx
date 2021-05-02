@@ -14,6 +14,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useAuthUserContext } from "../context/AuthUserContext";
+import { useTokenContext } from "../context/TokenContext";
 import { User } from "../Types";
 
 function Copyright() {
@@ -73,6 +75,8 @@ export default function SignInSide() {
   const [inputPassword, setInputPassword] = useState<string>(
     initialState.inputPassword
   );
+  const { authUserDispatch } = useAuthUserContext();
+  const { tokenDispatch } = useTokenContext();
 
   // on event
   const handleInputEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,6 +98,10 @@ export default function SignInSide() {
       .post(url, newUser)
       .then((result) => {
         console.log(result);
+        const authUser = { email: newUser.email };
+        const token = result.headers.authorization;
+        authUserDispatch({ type: "set", payload: authUser });
+        tokenDispatch({ type: "set", payload: token });
         history.push("/");
       })
       .catch((err) => {

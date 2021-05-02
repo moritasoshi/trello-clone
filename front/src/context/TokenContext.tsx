@@ -9,7 +9,11 @@ const TokenContext = createContext(
   }
 );
 
-const TokenProvider = ({ children }: { children: JSX.Element[] }) => {
+const TokenProvider = ({
+  children,
+}: {
+  children: JSX.Element | JSX.Element[];
+}) => {
   const [tokenState, tokenDispatch] = useTokenReducer({ token: "" });
 
   return (

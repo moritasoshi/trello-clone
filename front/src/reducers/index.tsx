@@ -1,5 +1,26 @@
 import { useReducer } from "react";
-import { BoardsAction, BoardsStore, TokenAction, TokenStore } from "../Types";
+import {
+  AuthUserAction,
+  AuthUserStore,
+  BoardsAction,
+  BoardsStore,
+  TokenAction,
+  TokenStore,
+} from "../Types";
+
+const authUserReducer: React.Reducer<AuthUserStore, AuthUserAction> = (
+  state,
+  action
+) => {
+  switch (action.type) {
+    case "set":
+      return {
+        auth_user: action.payload,
+      };
+    default:
+      throw new Error();
+  }
+};
 
 const boardsReducer: React.Reducer<BoardsStore, BoardsAction> = (
   state,
@@ -21,14 +42,6 @@ const boardsReducer: React.Reducer<BoardsStore, BoardsAction> = (
   }
 };
 
-/**
- * 
- * @param initialBoardsState 
- * @returns 
- */
-const useBoardsReducer = (initialBoardsState: BoardsStore) =>
-  useReducer(boardsReducer, initialBoardsState);
-
 const tokenReducer: React.Reducer<TokenStore, TokenAction> = (
   state,
   action
@@ -44,11 +57,27 @@ const tokenReducer: React.Reducer<TokenStore, TokenAction> = (
 };
 
 /**
- * 
- * @param initialTokenState 
- * @returns 
+ *
+ * @param initialAuthUserState
+ * @returns
+ */
+const useAuthUserReducer = (initialAuthUserState: AuthUserStore) =>
+  useReducer(authUserReducer, initialAuthUserState);
+
+/**
+ *
+ * @param initialBoardsState
+ * @returns
+ */
+const useBoardsReducer = (initialBoardsState: BoardsStore) =>
+  useReducer(boardsReducer, initialBoardsState);
+
+/**
+ *
+ * @param initialTokenState
+ * @returns
  */
 const useTokenReducer = (initialTokenState: TokenStore) =>
   useReducer(tokenReducer, initialTokenState);
 
-export { useBoardsReducer, useTokenReducer };
+export { useAuthUserReducer, useBoardsReducer, useTokenReducer };

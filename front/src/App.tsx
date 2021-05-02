@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch, useParams } from "react-router-dom";
+import { AuthUserProvider } from "./context/AuthUserContext";
 import { TokenProvider } from "./context/TokenContext";
 import BoardListPage from "./pages/BoardListPage";
 import BoardPage from "./pages/BoardPage";
@@ -60,7 +61,11 @@ const App: React.FC = () => {
           <DynamicBoardPage boards={boardsState.boards} />
         </Route>
         <Route exact path="/sign-in">
-          <SignInSide />
+          <TokenProvider>
+            <AuthUserProvider>
+              <SignInSide />
+            </AuthUserProvider>
+          </TokenProvider>
         </Route>
         <Route exact path="/sign-up">
           <SignUp />

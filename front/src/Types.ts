@@ -2,7 +2,7 @@
 export type User = {
   user_id?: number;
   email: string;
-  password: string;
+  password?: string;
 };
 
 export type Board = {
@@ -42,4 +42,12 @@ export type TokenStore = {
 export type TokenAction = {
   type: string;
   payload: string;
+};
+
+export type AuthUserStore = {
+  auth_user: User;
+};
+export type AuthUserAction = {
+  type: string;
+  payload: User;
 };
