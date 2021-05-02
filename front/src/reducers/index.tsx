@@ -27,16 +27,35 @@ const boardsReducer: React.Reducer<BoardsStore, BoardsAction> = (
   action
 ) => {
   switch (action.type) {
+    case "add":
+      if (!action.payload) {
+        throw new Error();
+      }
+      const newBoards = [...state.boards];
+      newBoards.push(action.payload);
+      return { boards: newBoards };
+    case "clear":
+      return { boards: [] };
     case "delete":
+      if (!action.payload) {
+        throw new Error();
+      }
       return {
         boards: state.boards.filter(
-          (board) => board.board_id !== action.board.board_id
+          (board) => board.board_id !== action.payload?.board_id
         ),
       };
-    case "add":
-      const newBoards = [...state.boards];
-      newBoards.push(action.board);
-      return { boards: newBoards };
+    case "save":
+      if (!action.payload) {
+        throw new Error();
+      }
+      const newBoard = { ...action.payload };
+      const index = state.boards.findIndex(
+        (board) => board.board_id === newBoard.board_id
+      );
+      let boards = [...state.boards];
+      boards.splice(index, 1, newBoard);
+      return { boards: boards };
     default:
       throw new Error();
   }

@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useBoardsContext } from "../context/BoardsContext";
 import { Board } from "../Types";
 
 const useStyles = makeStyles({
@@ -27,17 +28,21 @@ const useStyles = makeStyles({
 
 type Props = {
   board: Board;
-  deleteBoard: (board: Board) => void;
 };
 
 export default function SimpleBoard(props: Props) {
   const history = useHistory();
   const classes = useStyles();
-  const { board, deleteBoard } = props;
+  const { board } = props;
+  const { boardsState, boardsDispatch } = useBoardsContext();
 
   const handleOnClick = () => {
     const board_id = board.board_id;
     history.push("/board/" + board_id);
+  };
+
+  const deleteBoard = () => {
+    boardsDispatch({ type: "delete", payload: board });
   };
 
   return (
@@ -58,7 +63,7 @@ export default function SimpleBoard(props: Props) {
         <Button
           variant="outlined"
           className={classes.button}
-          onClick={() => deleteBoard(board)}
+          onClick={deleteBoard}
         >
           Delete
         </Button>

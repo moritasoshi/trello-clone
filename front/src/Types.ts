@@ -33,7 +33,7 @@ export type BoardsStore = {
 };
 export type BoardsAction = {
   type: string;
-  board: Board;
+  payload?: Board;
 };
 
 export type TokenStore = {

@@ -4,23 +4,18 @@ import React, { useEffect } from "react";
 import SimpleBoard from "../components/SimpleBoard";
 import { useBoardsContext } from "../context/BoardsContext";
 import { useTokenContext } from "../context/TokenContext";
-import { Board } from "../Types";
 
 const useStyles = makeStyles({
   card: {
     margin: 30,
   },
 });
-type Props = {
-  boards: Board[];
-  deleteBoard: (board: Board) => void;
-};
-const BoardListPage: React.FC<Props> = (props: Props) => {
-  const { boards, deleteBoard } = props;
+
+const BoardListPage: React.FC = () => {
   const classes = useStyles();
 
   const { boardsState, boardsDispatch } = useBoardsContext();
-  const { tokenState, tokenDispatch } = useTokenContext();
+  const { tokenState } = useTokenContext();
 
   useEffect(() => {
     if (tokenState.token) {
@@ -44,8 +39,9 @@ const BoardListPage: React.FC<Props> = (props: Props) => {
       .catch((err) => {
         console.error(err);
       });
+    boardsDispatch({ type: "clear" });
     for (const board of boards_data) {
-      boardsDispatch({ type: "add", board: board });
+      boardsDispatch({ type: "add", payload: board });
     }
   };
 
@@ -53,7 +49,7 @@ const BoardListPage: React.FC<Props> = (props: Props) => {
     <React.Fragment>
       {boardsState.boards.map((board) => (
         <div className={classes.card} key={board.board_id}>
-          <SimpleBoard board={board} deleteBoard={deleteBoard} />
+          <SimpleBoard board={board} />
         </div>
       ))}
     </React.Fragment>
