@@ -14,9 +14,7 @@ const AuthUserProvider = ({
 }: {
   children: JSX.Element | JSX.Element[];
 }) => {
-  const [authUserState, authUserDispatch] = useAuthUserReducer({
-    auth_user: { email: "" },
-  });
+  const [authUserState, authUserDispatch] = useAuthUserReducer({}as AuthUserStore);
 
   return (
     <AuthUserContext.Provider value={{ authUserState, authUserDispatch }}>
