@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch, useParams } from "react-router-dom";
+import { TokenProvider } from "./context/TokenContext";
 import BoardListPage from "./pages/BoardListPage";
 import BoardPage from "./pages/BoardPage";
 import SignInSide from "./pages/SignInSide";
@@ -9,15 +10,11 @@ import { useBoardsReducer } from "./reducers/index";
 import Header from "./templates/Header";
 import { Board } from "./Types";
 
-const initialBoardsState = {
-  boards: [],
-};
-
 const App: React.FC = () => {
-  const [state, dispatch] = useBoardsReducer(initialBoardsState);
+  const [boardsState, boardsDispatch] = useBoardsReducer({ boards: [] });
 
   const deleteBoard = (board: Board) => {
-    dispatch({ type: "delete", board: board });
+    boardsDispatch({ type: "delete", board: board });
   };
 
   useEffect(() => {
@@ -30,7 +27,7 @@ const App: React.FC = () => {
     const config = {
       headers: {
         Authorization:
-          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmb29Ac2FtcGxlLmNvbSIsImV4cCI6MTYxOTkxNzI5OH0.hLaFezhu6RBpLbT4nRuBwizUjpTyD0jOwQmV_jIgKndN4aRmZPfN7MbFcArvwEF0CmP9AC3dDWPoYlelOMFBkA",
+          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmb29Ac2FtcGxlLmNvbSIsImV4cCI6MTYyMDgxMjk0N30.hDAJCokHfEv8eLme0e4Obf83XQWSKW5dj8jGQOy6-ndY5vcTTmpw8Ucsb2vEneahmFgNk0MbZCF5beqjHI5IaA",
       },
     };
     const boards_data = await axios
@@ -42,7 +39,7 @@ const App: React.FC = () => {
         console.error(err);
       });
     for (const board of boards_data) {
-      dispatch({ type: "add", board: board });
+      boardsDispatch({ type: "add", board: board });
     }
   };
 
@@ -50,12 +47,17 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <Header title={"Trello Clone"} />
-          <BoardListPage boards={state.boards} deleteBoard={deleteBoard} />
+          <TokenProvider>
+            <Header title={"Trello Clone"} />
+            <BoardListPage
+              boards={boardsState.boards}
+              deleteBoard={deleteBoard}
+            />
+          </TokenProvider>
         </Route>
         <Route exact path="/board/:board_id">
           <Header title={"Trello Clone"} />
-          <DynamicBoardPage boards={state.boards} />
+          <DynamicBoardPage boards={boardsState.boards} />
         </Route>
         <Route exact path="/sign-in">
           <SignInSide />

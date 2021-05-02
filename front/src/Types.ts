@@ -35,3 +35,11 @@ export type BoardsAction = {
   type: string;
   board: Board;
 };
+
+export type TokenStore = {
+  token: string;
+};
+export type TokenAction = {
+  type: string;
+  payload: string;
+};

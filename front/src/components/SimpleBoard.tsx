@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useTokenContext } from "../context/TokenContext";
 import { Board } from "../Types";
 
 const useStyles = makeStyles({
@@ -34,10 +35,12 @@ export default function SimpleBoard(props: Props) {
   const history = useHistory();
   const classes = useStyles();
   const { board, deleteBoard } = props;
+  const { tokenState, tokenDispatch } = useTokenContext();
 
   const handleOnClick = () => {
     const board_id = board.board_id;
-    history.push("/board/" + board_id);
+    // history.push("/board/" + board_id);
+    console.log(tokenState);
   };
 
   return (
@@ -51,7 +54,7 @@ export default function SimpleBoard(props: Props) {
         <Button
           variant="outlined"
           className={classes.button}
-          onClick={handleOnClick}
+          onClick={() => tokenDispatch({ type: "set", payload: "heloooo" })}
         >
           View this board
         </Button>
