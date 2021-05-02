@@ -88,16 +88,15 @@ export default function SignInSide() {
     setInputPassword(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const newUser: User = {
       email: inputEmail,
       password: inputPassword,
     };
     const url: string = "http://localhost:8080/api/v1/auth/login";
-    axios
+    await axios
       .post(url, newUser)
       .then((result) => {
-        console.log(result);
         const authUser = { email: newUser.email };
         const token = result.headers.authorization;
         authUserDispatch({ type: "set", payload: authUser });

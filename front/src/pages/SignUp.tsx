@@ -82,7 +82,6 @@ export default function SignUp() {
     axios
       .post(url, newUser)
       .then((result) => {
-        console.log(result);
         history.push("/sign-in");
       })
       .catch((err) => {

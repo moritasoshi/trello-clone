@@ -9,7 +9,11 @@ const AuthUserContext = createContext(
   }
 );
 
-const AuthUserProvider = ({ children }: { children: JSX.Element }) => {
+const AuthUserProvider = ({
+  children,
+}: {
+  children: JSX.Element | JSX.Element[];
+}) => {
   const [authUserState, authUserDispatch] = useAuthUserReducer({
     auth_user: { email: "" },
   });

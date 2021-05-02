@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch, useParams } from "react-router-dom";
 import { AuthUserProvider } from "./context/AuthUserContext";
+import { BoardsProvider } from "./context/BoardsContext";
 import { TokenProvider } from "./context/TokenContext";
 import BoardListPage from "./pages/BoardListPage";
 import BoardPage from "./pages/BoardPage";
@@ -47,29 +48,29 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
-          <TokenProvider>
-            <Header title={"Trello Clone"} />
-            <BoardListPage
-              boards={boardsState.boards}
-              deleteBoard={deleteBoard}
-            />
-          </TokenProvider>
-        </Route>
-        <Route exact path="/board/:board_id">
-          <Header title={"Trello Clone"} />
-          <DynamicBoardPage boards={boardsState.boards} />
-        </Route>
-        <Route exact path="/sign-in">
-          <TokenProvider>
-            <AuthUserProvider>
-              <SignInSide />
-            </AuthUserProvider>
-          </TokenProvider>
-        </Route>
-        <Route exact path="/sign-up">
-          <SignUp />
-        </Route>
+        <AuthUserProvider>
+          <BoardsProvider>
+            <TokenProvider>
+              <Route exact path="/">
+                <Header title={"Trello Clone"} />
+                <BoardListPage
+                  boards={boardsState.boards}
+                  deleteBoard={deleteBoard}
+                />
+              </Route>
+              <Route exact path="/board/:board_id">
+                <Header title={"Trello Clone"} />
+                <DynamicBoardPage boards={boardsState.boards} />
+              </Route>
+              <Route exact path="/sign-in">
+                <SignInSide />
+              </Route>
+              <Route exact path="/sign-up">
+                <SignUp />
+              </Route>
+            </TokenProvider>
+          </BoardsProvider>
+        </AuthUserProvider>
       </Switch>
     </BrowserRouter>
   );
