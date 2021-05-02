@@ -20,12 +20,15 @@ const boardsReducer: React.Reducer<BoardsStore, BoardsAction> = (
       throw new Error();
   }
 };
+
 /**
- *
- * @param state TokenStore
- * @param action TokenAction
- * @returns
+ * 
+ * @param initialBoardsState 
+ * @returns 
  */
+const useBoardsReducer = (initialBoardsState: BoardsStore) =>
+  useReducer(boardsReducer, initialBoardsState);
+
 const tokenReducer: React.Reducer<TokenStore, TokenAction> = (
   state,
   action
@@ -40,8 +43,12 @@ const tokenReducer: React.Reducer<TokenStore, TokenAction> = (
   }
 };
 
-export const useBoardsReducer = (initialBoardsState: BoardsStore) =>
-  useReducer(boardsReducer, initialBoardsState);
-
-export const useTokenReducer = (initialTokenState: TokenStore) =>
+/**
+ * 
+ * @param initialTokenState 
+ * @returns 
+ */
+const useTokenReducer = (initialTokenState: TokenStore) =>
   useReducer(tokenReducer, initialTokenState);
+
+export { useBoardsReducer, useTokenReducer };
