@@ -4,6 +4,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { Link } from "react-router-dom";
+import { paths } from "../config";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -42,12 +43,12 @@ export default function Header(props: Props) {
           noWrap
           className={classes.toolbarTitle}
         >
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to={paths.board_list} style={{ textDecoration: "none" }}>
             {title}
           </Link>
         </Typography>
         <Button variant="outlined" size="small">
-          <Link to="/sign-in" style={{ textDecoration: "none" }}>
+          <Link to={paths.sign_in} style={{ textDecoration: "none" }}>
             Sign in
           </Link>
         </Button>

@@ -7,6 +7,7 @@ import {
   Switch,
   useParams,
 } from "react-router-dom";
+import { paths } from "./config";
 import {
   AuthUserProvider,
   useAuthUserContext,
@@ -21,32 +22,30 @@ import Header from "./templates/Header";
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <AuthUserProvider>
-          <BoardsProvider>
-            <TokenProvider>
-              <Route exact path="/sign-in">
+    <AuthUserProvider>
+      <BoardsProvider>
+        <TokenProvider>
+          <BrowserRouter>
+            <Switch>
+              <Route exact path={paths.sign_in}>
                 <SignInSide />
               </Route>
-              <Route exact path="/sign-up">
+              <Route exact path={paths.sign_up}>
                 <SignUp />
               </Route>
-              <PrivateRoute>
-                <Route exact path="/">
-                  <Header title={"Trello Clone"} />
-                  <BoardListPage />
-                </Route>
-                <Route exact path="/board/:board_id">
-                  <Header title={"Trello Clone"} />
-                  <DynamicBoardPage />
-                </Route>
+              <PrivateRoute exact path={paths.board_list}>
+                <Header title={"Trello Clone"} />
+                <BoardListPage />
               </PrivateRoute>
-            </TokenProvider>
-          </BoardsProvider>
-        </AuthUserProvider>
-      </Switch>
-    </BrowserRouter>
+              <PrivateRoute exact path={paths.board}>
+                <Header title={"Trello Clone"} />
+                <DynamicBoardPage />
+              </PrivateRoute>
+            </Switch>
+          </BrowserRouter>
+        </TokenProvider>
+      </BoardsProvider>
+    </AuthUserProvider>
   );
 };
 
@@ -62,7 +61,7 @@ const PrivateRoute: React.FC<RouteProps> = ({ ...props }) => {
     console.log(
       `ログインしていないユーザーは${props.path}へはアクセスできません`
     );
-    return <Redirect to="/sign-in" />;
+    return <Redirect to={paths.sign_in} />;
   }
 };
 
