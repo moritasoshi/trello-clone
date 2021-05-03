@@ -14,6 +14,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { api_base_url } from "../config";
 import { User } from "../Types";
 
 function Copyright() {
@@ -78,7 +79,7 @@ export default function SignUp() {
       email: inputEmail,
       password: inputPassword,
     };
-    const url: string = "http://localhost:8080/api/v1/auth/sign-up";
+    const url: string = api_base_url + "/auth/sign-up";
     axios
       .post(url, newUser)
       .then((result) => {

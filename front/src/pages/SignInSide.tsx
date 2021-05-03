@@ -14,6 +14,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { api_base_url } from "../config";
 import { useAuthUserContext } from "../context/AuthUserContext";
 import { useTokenContext } from "../context/TokenContext";
 import { User } from "../Types";
@@ -93,7 +94,7 @@ export default function SignInSide() {
       email: inputEmail,
       password: inputPassword,
     };
-    const url: string = "http://localhost:8080/api/v1/auth/login";
+    const url: string = api_base_url + "/auth/login";
     await axios
       .post(url, newUser)
       .then((result) => {

@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect } from "react";
 import SimpleBoard from "../components/SimpleBoard";
+import { api_base_url } from "../config";
 import { useBoardsContext } from "../context/BoardsContext";
 import { useTokenContext } from "../context/TokenContext";
 
@@ -25,7 +26,7 @@ const BoardListPage: React.FC = () => {
   }, [tokenState.token]);
 
   const fetchBoards = async () => {
-    const url = "http://localhost:8080/api/v1/boards";
+    const url = api_base_url + "/boards";
     const config = {
       headers: {
         Authorization: tokenState.token,
