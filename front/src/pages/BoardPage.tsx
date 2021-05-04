@@ -36,9 +36,11 @@ export default function BoardPage({ board }: Props) {
 
   return (
     <>
-      <Button variant="outlined" onClick={addTile}>
-        Add Tile
-      </Button>
+      <Row wrap p={2} alignItems={"baseline"} className={styles.header}>
+        <Button variant="outlined" onClick={addTile}>
+          Add Tile
+        </Button>
+      </Row>
       <Row wrap p={2} alignItems={"baseline"} className={styles.header}>
         {tiles?.map((tile: Tile) => {
           return <SimpleTile tile={tile} key={tile.tile_id} />;
