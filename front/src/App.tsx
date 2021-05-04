@@ -1,17 +1,7 @@
 import React from "react";
-import {
-  BrowserRouter,
-  Redirect,
-  Route,
-  RouteProps,
-  Switch,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter, Route, Switch, useParams } from "react-router-dom";
 import { paths } from "./config";
-import {
-  AuthUserProvider,
-  useAuthUserContext,
-} from "./context/AuthUserContext";
+import { AuthUserProvider } from "./context/AuthUserContext";
 import { BoardsProvider, useBoardsContext } from "./context/BoardsContext";
 import { TokenProvider } from "./context/TokenContext";
 import BoardListPage from "./pages/BoardListPage";
@@ -19,6 +9,7 @@ import BoardPage from "./pages/BoardPage";
 import SignInSide from "./pages/SignInSide";
 import SignUp from "./pages/SignUp";
 import Header from "./templates/Header";
+import PrivateRoute from "./templates/PrivateRoute";
 
 const App: React.FC = () => {
   return (
@@ -47,22 +38,6 @@ const App: React.FC = () => {
       </BoardsProvider>
     </AuthUserProvider>
   );
-};
-
-// PrivateRouteの実装
-const PrivateRoute: React.FC<RouteProps> = ({ ...props }) => {
-  const { authUserState } = useAuthUserContext();
-  const isAuthenticated = authUserState.auth_user != null; //認証されているかの判定
-  console.log(authUserState.auth_user);
-  console.log(props);
-  if (isAuthenticated) {
-    return <Route {...props} />;
-  } else {
-    console.log(
-      `ログインしていないユーザーは${props.path}へはアクセスできません`
-    );
-    return <Redirect to={paths.sign_in} />;
-  }
 };
 
 // DynamicBoardPageの実装
