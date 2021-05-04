@@ -1,13 +1,13 @@
 import React from "react";
-import { BrowserRouter, Route, Switch, useParams } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { paths } from "./config";
 import { AuthUserProvider } from "./context/AuthUserContext";
-import { BoardsProvider, useBoardsContext } from "./context/BoardsContext";
+import { BoardsProvider } from "./context/BoardsContext";
 import { TokenProvider } from "./context/TokenContext";
 import BoardListPage from "./pages/BoardListPage";
-import BoardPage from "./pages/BoardPage";
 import SignInSide from "./pages/SignInSide";
 import SignUp from "./pages/SignUp";
+import DynamicBoardPage from "./templates/DynamicBoardPage";
 import Header from "./templates/Header";
 import PrivateRoute from "./templates/PrivateRoute";
 
@@ -38,22 +38,6 @@ const App: React.FC = () => {
       </BoardsProvider>
     </AuthUserProvider>
   );
-};
-
-// DynamicBoardPageの実装
-const DynamicBoardPage: React.FC = () => {
-  const { board_id } = useParams<{ board_id: string }>();
-  const board_id_number = Number(board_id);
-
-  const { boardsState } = useBoardsContext();
-
-  const board = boardsState.boards.find(
-    (board) => board.board_id === board_id_number
-  );
-  if (board) {
-    return <BoardPage board={board} />;
-  }
-  return <div>Board Not Found!</div>;
 };
 
 export default App;
